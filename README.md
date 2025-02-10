@@ -34,3 +34,15 @@ To approve or cancel a request, the user simply needs to click on the respective
 ![image](https://github.com/user-attachments/assets/17a95404-fbc0-4117-87e5-127ae30ca2f0)
 
 If the action is successful, a confirmation popup will display the updated status.
+
+# Additional Features
+Once a customer is selected, the header now includes a dropdown, allowing users to easily switch between customers.
+
+![image](https://github.com/user-attachments/assets/10affb35-130e-4629-830e-6d3f062452ce)
+
+A Theme Toggle Button has been added, enabling users to switch between light and dark modes for a personalized experience.
+
+![image](https://github.com/user-attachments/assets/dcff9048-55c6-4115-b377-b8284303e291)
+
+
+![image](https://github.com/user-attachments/assets/c855d881-abe7-4d8b-b28a-846f20f1c807)
