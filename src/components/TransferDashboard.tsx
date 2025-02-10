@@ -15,7 +15,7 @@ import {
   Button,
 } from "@mui/material";
 import Layout from "./Layout";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContextDefinition";
 import { handleTransfer } from "../api/transfer";
 
@@ -35,10 +35,19 @@ const TransferDashboard = () => {
     url: `${url}/transfer-requests`,
     field: "results",
   });
-  const filterTransferList = transferList?.filter(
-    (transfer) => transfer.payoutAccountId === customer?.accountId
-  );
+
+  const [filterTransferList, setFilterTransferList] = useState<Payout[]>();
+  const [isLoadingRequest, setIsLoadingRequest] = useState<string[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (transferList) {
+      const filterInitial = transferList?.filter(
+        (transfer) => transfer.payoutAccountId === customer?.accountId
+      );
+      setFilterTransferList(filterInitial);
+    }
+  }, [transferList, customer]);
 
   if (loading)
     return <CircularProgress sx={{ display: "block", mx: "auto", mt: 4 }} />;
@@ -57,18 +66,35 @@ const TransferDashboard = () => {
 
   const handleApprove = async (id: string): Promise<void> => {
     try {
+      setIsLoadingRequest((prev) => [...prev, id]);
       const response = await handleTransfer(id, "execute");
-      console.log("Transfer Approved:", response);
+      setFilterTransferList((prevList) =>
+        prevList?.map((transfer) =>
+          transfer.id === id
+            ? { ...transfer, status: response.status }
+            : transfer
+        )
+      );
+      alert("Transfer request approved successfully");
     } catch (error: unknown) {
       console.error("Failed to approve transfer request:", error);
       alert(`Failed to approve transfer request: ${(error as Error).message}`);
+    } finally {
+      setIsLoadingRequest((prev) => prev.filter((item) => item !== id));
     }
   };
 
   const handleCancel = async (id: string): Promise<void> => {
     try {
       const response = await handleTransfer(id, "cancel");
-      console.log("Transfer Approved:", response);
+      setFilterTransferList((prevList) =>
+        prevList?.map((transfer) =>
+          transfer.id === id
+            ? { ...transfer, status: response.status }
+            : transfer
+        )
+      );
+      alert("Transfer request canceled successfully");
     } catch (error: unknown) {
       console.error("Failed to approve transfer request:", error);
       alert(`Failed to approve transfer request: ${(error as Error).message}`);
@@ -121,7 +147,10 @@ const TransferDashboard = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    disabled={payout.status !== "IN_REVIEW"}
+                    disabled={
+                      payout.status !== "IN_REVIEW" ||
+                      isLoadingRequest.includes(payout.id)
+                    }
                     onClick={() => handleApprove(payout.id)}
                   >
                     Approve
@@ -129,7 +158,10 @@ const TransferDashboard = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    disabled={payout.status !== "IN_REVIEW"}
+                    disabled={
+                      payout.status !== "IN_REVIEW" ||
+                      isLoadingRequest.includes(payout.id)
+                    }
                     onClick={() => handleCancel(payout.id)}
                   >
                     Cancel
