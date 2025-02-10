@@ -38,7 +38,7 @@ If the action is successful, a confirmation popup will display the updated statu
 # Additional Features
 Once a customer is selected, the header now includes a dropdown, allowing users to easily switch between customers.
 
-![image](https://github.com/user-attachments/assets/10affb35-130e-4629-830e-6d3f062452ce)
+![image](https://github.com/user-attachments/assets/1d491136-f9c7-41dc-ab2e-cfd5665b3ed7)
 
 A Theme Toggle Button has been added, enabling users to switch between light and dark modes for a personalized experience.
 
