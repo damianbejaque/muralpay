@@ -1,50 +1,28 @@
-# React + TypeScript + Vite
+# MuralPay
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is deployed for github pages at this [URL](https://damianbejaque.github.io/muralpay)
 
-Currently, two official plugins are available:
+#How Does It Work?
+Application Flow
+If the owner of the API key does not have any customers with the status "COMPLETE", they will be unable to access the full application. Instead, they will be redirected to "/muralpay/create-customer" to create a customer.
+![image](https://github.com/user-attachments/assets/3509715a-6e6e-4b1e-a12d-fa96ec0b37fb)
+Once a customer with the "COMPLETE" status is available, a dropdown menu will appear, allowing the user to select any customer in this state.
+![image](https://github.com/user-attachments/assets/9e9e15ca-f373-4f98-9893-02f36a7a1502)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+After selecting a customer, the user will be redirected to the dashboard.
+![image](https://github.com/user-attachments/assets/e41140fd-56cd-47e7-a3d7-7676019f7b7e)
+Account Details
+If the user has not yet joined the application and verified their data, clicking on "Account Details" will not display full information for the "Deposit Account".
+Example:
+![image](https://github.com/user-attachments/assets/2acd80b2-a77a-4dc2-a1f0-4b8e35810465)
 
-## Expanding the ESLint configuration
+#Transfer Requests
+Clicking on "Transfer Request" in the sidebar will navigate the user to a dashboard displaying a table of all current requests for the selected customer.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To create a new transfer request, the user can click on the "Create Transfer" button, which opens a form for submitting a new request.
+![image](https://github.com/user-attachments/assets/1ad91924-c805-47d6-b00c-6c2f39ea4ded)
 
-- Configure the top-level `parserOptions` property like this:
+To approve or cancel a request, the user simply needs to click on the respective option, which will send the corresponding request.
+![image](https://github.com/user-attachments/assets/17a95404-fbc0-4117-87e5-127ae30ca2f0)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+If the action is successful, a confirmation popup will display the updated status.
